@@ -1,8 +1,11 @@
+import { Button } from "@/components/ui/button";
 
 
 export default function Home() {
     return (
-     <p>Hello Admin Dashboard </p>
+     <div>
+        <Button>Click me</Button>
+     </div>
     )
   }
   
