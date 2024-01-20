@@ -22,9 +22,9 @@ export async function POST(
     if (!name) {
       return new NextResponse("Name is required", { status: 401 });
     }
+    await connectToDatabase();
 
-    await connectToDatabase()
-    const store = await prisma.store.create({
+    const store = await prismadb.store.create({
       data: {
         name,
         userId,
@@ -36,6 +36,6 @@ export async function POST(
     console.log('[STORES_POST]', error);
     return new NextResponse("Internal error", { status: 500 });
   } finally{
-    await prisma.$disconnect();
+    await prismadb.$disconnect();
   }
 };
