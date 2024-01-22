@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs';
 
 import prismadb from '@/lib/prismadb';
-import { connectToDatabase } from '@/helpers/server-helpers';
 import { PrismaClient, Prisma } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -22,8 +21,6 @@ export async function POST(
     if (!name) {
       return new NextResponse("Name is required", { status: 401 });
     }
-    await connectToDatabase();
-
     const store = await prismadb.store.create({
       data: {
         name,

@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { Button } from "@/components/ui/button";
-import { connectToDatabase } from "@/helpers/server-helpers";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -33,7 +32,6 @@ export const StoreModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    await connectToDatabase();
     try {
       setLoading(true);
       const response = await axios.post('/api/stores', values);
