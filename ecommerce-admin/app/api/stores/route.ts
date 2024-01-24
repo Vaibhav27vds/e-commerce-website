@@ -2,9 +2,6 @@ import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs';
 
 import prismadb from '@/lib/prismadb';
-import { PrismaClient, Prisma } from '@prisma/client';
-
-const prisma = new PrismaClient();
 
 export async function POST(
   req: Request,
@@ -14,13 +11,15 @@ export async function POST(
     const body = await req.json();
 
     const { name } = body;
+
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
     if (!name) {
-      return new NextResponse("Name is required", { status: 401 });
+      return new NextResponse("Name is required", { status: 400 });
     }
+
     const store = await prismadb.store.create({
       data: {
         name,
@@ -28,11 +27,9 @@ export async function POST(
       }
     });
   
-    return NextResponse.json({ store });
+    return NextResponse.json(store);
   } catch (error) {
     console.log('[STORES_POST]', error);
     return new NextResponse("Internal error", { status: 500 });
-  } finally{
-    await prismadb.$disconnect();
   }
 };
