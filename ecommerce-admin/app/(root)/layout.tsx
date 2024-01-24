@@ -3,6 +3,9 @@ import { auth } from '@clerk/nextjs';
 
 import prismadb from '@/lib/prismadb';
 import { Prisma } from '@prisma/client';
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 export default async function SetupLayout({
   children,
